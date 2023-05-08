@@ -2,14 +2,15 @@
 #include <Clases.h>
 #include <vector>
 #include <string>
+#include <list>
 using namespace std;
 
-router CrearRouter(string Nombre);
+router *CrearRouter(string Nombre);
 
 int main()
 {
-    bool continuar = true; int seleccion; red WiFi; vector <router> routers, red;  string RouterName;
-    cout << "[ENRUTADORES Y REDES]" << endl; int Q, P, Coste;
+    bool continuar = true; int seleccion; red WiFi; vector <router*> routers, red;  string RouterName;
+    cout << "[ENRUTADORES Y REDES]" << endl; int Q, P, Coste; router A("");
     while (continuar)
     {
 
@@ -41,13 +42,13 @@ int main()
             }
             for (int C = 0; C < routers.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << routers[C]->getI_D() << endl;
             }
             cout << "\t [Elija los enrutadores a conectar]:" << endl;
             cin >> Q;
             cin >> P;
             cout << "\t [Ingrese el coste]:" << endl; cin >> Coste;
-            routers[Q].Conect(routers[P], Coste);
+            routers[Q]->Conect(*routers[P], Coste);
             break;
         case 3:
             if (routers.empty()){
@@ -56,12 +57,12 @@ int main()
             }
             for (int C = 0; C < routers.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << routers[C]->getI_D() << endl;
             }
             cout << "\t [Elija los enrutadores a desconectar]:" << endl;
             cin >> Q;
             cin >> P;
-            routers[Q].Disconect(routers[P]);
+            routers[Q]->Disconect(*routers[P]);
             break;
         case 4:
             if (routers.empty()){
@@ -70,12 +71,12 @@ int main()
             }
             for (int C = 0; C < routers.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << routers[C]->getI_D() << endl;
             }
             cout << "\t [Elija el enrutador para conectar a la red]:" << endl;
             cin >> Q;
             red.push_back(routers[Q]);
-            WiFi.Join(&routers[Q]);
+            WiFi.Join(routers[Q]);
             break;
         case 5:
             if (red.empty()){
@@ -84,11 +85,11 @@ int main()
             }
             for (int C = 0; C < red.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << red[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << red[C]->getI_D() << endl;
             }
             cout << "\t [Elija el enrutador para desconectar de la red]:" << endl;
             cin >> Q;
-            WiFi.Leave(&red[Q]);
+            WiFi.Leave(red[Q]);
             red.erase(red.begin() + Q);
 
             break;
@@ -104,12 +105,12 @@ int main()
             }
             for (int C = 0; C < red.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << red[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << red[C]->getI_D() << endl;
             }
             cout << "\t [Elija los enrutadores para conocer su camino mas eficiente]:" << endl;
             cin >> Q;
             cin >> P;
-            cout << WiFi.Path(&red[Q], &red[P]);
+            cout << WiFi.Path(red[Q], red[P]);
             break;
         case 8:
             if (routers.empty()){
@@ -118,11 +119,11 @@ int main()
             }
             for (int C = 0; C < routers.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << routers[C]->getI_D() << endl;
             }
             cout << "\t [Elija el enrutador]:" << endl;
             cin >> Q;
-            routers[Q].Show();
+            routers[Q]->Show();
             break;
         case 9:
             WiFi.Refresh();
@@ -140,8 +141,7 @@ int main()
 
 }
 
-router CrearRouter(string Nombre)
+router *CrearRouter(string Nombre)
 {
-    router Nuevo(Nombre);
-    return Nuevo;
+    return new router(Nombre);
 }
