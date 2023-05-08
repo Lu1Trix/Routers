@@ -156,10 +156,15 @@ int red::Cheap(router * A, router * B){
 
   }
   return min1;
+
 }
+
 
 void red::Refresh()
 {
+
+
+
   std::map<std::string, router*>::iterator itr, itrto;
   int aux, cont = 0;
 
@@ -174,6 +179,8 @@ void red::Refresh()
         }
 
   }
+
+
 
 
 

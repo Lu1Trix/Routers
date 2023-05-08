@@ -35,6 +35,10 @@ int main()
             routers.push_back(CrearRouter(RouterName));
             break;
         case 2:
+            if (routers.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
             for (int C = 0; C < routers.size(); C++)
             {
                 cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
@@ -46,6 +50,10 @@ int main()
             routers[Q].Conect(routers[P], Coste);
             break;
         case 3:
+            if (routers.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
             for (int C = 0; C < routers.size(); C++)
             {
                 cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
@@ -56,6 +64,10 @@ int main()
             routers[Q].Disconect(routers[P]);
             break;
         case 4:
+            if (routers.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
             for (int C = 0; C < routers.size(); C++)
             {
                 cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
@@ -66,14 +78,19 @@ int main()
             WiFi.Join(&routers[Q]);
             break;
         case 5:
-            for (int C = 0; C < routers.size(); C++)
+            if (red.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
+            for (int C = 0; C < red.size(); C++)
             {
-                cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
+                cout << "\t\t [" << C << "]" << " " << red[C].getI_D() << endl;
             }
             cout << "\t [Elija el enrutador para desconectar de la red]:" << endl;
             cin >> Q;
+            WiFi.Leave(&red[Q]);
+            red.erase(red.begin() + Q);
 
-            WiFi.Leave(&routers[Q]);
             break;
         case 6:
             cout << "\t [Los costes de envio de paquetes se muestran en esta tabla]:" << endl;
@@ -81,6 +98,10 @@ int main()
             break;
         case 7:
             cout << "\t [A continuacion se mostraran los enrutadores los cuales estan en la red]:" << endl;
+            if (red.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
             for (int C = 0; C < red.size(); C++)
             {
                 cout << "\t\t [" << C << "]" << " " << red[C].getI_D() << endl;
@@ -91,6 +112,10 @@ int main()
             cout << WiFi.Path(&red[Q], &red[P]);
             break;
         case 8:
+            if (routers.empty()){
+                cout << "[No hay enrutadores disponibles]" << endl;
+                break;
+            }
             for (int C = 0; C < routers.size(); C++)
             {
                 cout << "\t\t [" << C << "]" << " " << routers[C].getI_D() << endl;
